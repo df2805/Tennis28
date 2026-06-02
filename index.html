@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tennis Match Predictor</title>
+    <meta
+      name="description"
+      content="A GitHub Pages site for an ATP and WTA tennis match prediction project."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="#top" aria-label="Tennis Match Predictor home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Tennis Match Predictor</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#predictor">Predictor</a>
+        <a href="#model">Model</a>
+        <a href="#deploy">Deploy</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="workspace" id="predictor" aria-labelledby="predictor-title">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">ATP / WTA - hard - clay - grass</p>
+            <h1 id="predictor-title">Tennis Match Predictor</h1>
+            <p>
+              A GitHub Pages front end for a tennis model pipeline using Jeff Sackmann match data,
+              Elo signals, serve and return stats, surface form, rankings, H2H, and Grand Slam context.
+            </p>
+          </div>
+
+          <div class="court-visual" aria-hidden="true">
+            <div class="court-lines">
+              <span class="net"></span>
+              <span class="ball ball-one"></span>
+              <span class="ball ball-two"></span>
+            </div>
+          </div>
+        </div>
+
+        <form class="predictor" id="match-form">
+          <div class="field-grid">
+            <label>
+              Player 1
+              <input id="player-one" name="player-one" type="text" value="Sinner" autocomplete="off">
+            </label>
+            <label>
+              Player 2
+              <input id="player-two" name="player-two" type="text" value="Alcaraz" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="control-grid">
+            <fieldset>
+              <legend>Surface</legend>
+              <div class="segmented" role="radiogroup" aria-label="Surface">
+                <label><input type="radio" name="surface" value="Hard" checked><span>Hard</span></label>
+                <label><input type="radio" name="surface" value="Clay"><span>Clay</span></label>
+                <label><input type="radio" name="surface" value="Grass"><span>Grass</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Tour</legend>
+              <div class="segmented" role="radiogroup" aria-label="Tour">
+                <label><input type="radio" name="tour" value="ATP" checked><span>ATP</span></label>
+                <label><input type="radio" name="tour" value="WTA"><span>WTA</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Format</legend>
+              <div class="segmented" role="radiogroup" aria-label="Match format">
+                <label><input type="radio" name="format" value="3" checked><span>Bo3</span></label>
+                <label><input type="radio" name="format" value="5"><span>Bo5</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="inline-controls">
+            <fieldset>
+              <legend>Slam</legend>
+              <div class="segmented slam-control" role="radiogroup" aria-label="Grand Slam">
+                <label><input type="radio" name="slam" value="None" checked><span>None</span></label>
+                <label><input type="radio" name="slam" value="Roland Garros"><span>Roland Garros</span></label>
+                <label><input type="radio" name="slam" value="Wimbledon"><span>Wimbledon</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <button class="primary-button" type="submit">Run Prediction</button>
+        </form>
+
+        <section class="results" id="results" aria-live="polite">
+          <div class="result-heading">
+            <div>
+              <p class="eyebrow">Win probability</p>
+              <h2 id="match-title">Sinner vs Alcaraz</h2>
+            </div>
+            <span class="badge" id="match-badge">ATP - Hard - Bo3</span>
+          </div>
+
+          <div class="probability-stack">
+            <div class="probability-row">
+              <span id="p1-name">Sinner</span>
+              <div class="meter"><span id="p1-bar"></span></div>
+              <strong id="p1-prob">57.4%</strong>
+            </div>
+            <div class="probability-row">
+              <span id="p2-name">Alcaraz</span>
+              <div class="meter"><span id="p2-bar"></span></div>
+              <strong id="p2-prob">42.6%</strong>
+            </div>
+          </div>
+
+          <div class="stat-matrix" aria-label="Model feature snapshot">
+            <div><span>Elo diff</span><strong id="elo-diff">+64</strong></div>
+            <div><span>Surface form</span><strong id="surface-form">+3.8%</strong></div>
+            <div><span>Rank signal</span><strong id="rank-signal">+21</strong></div>
+            <div><span>Slam boost</span><strong id="slam-boost">0.0%</strong></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="project-band" id="model" aria-labelledby="model-title">
+        <div class="section-copy">
+          <p class="eyebrow">Project</p>
+          <h2 id="model-title">Built from the pasted Colab pipeline</h2>
+          <p>
+            The original notebook downloads ATP, Challenger, WTA, and ITF match CSVs, builds
+            per-tour and per-surface XGBoost models, calibrates probabilities, and exposes an
+            ipywidgets prediction UI. This site packages the project for GitHub Pages.
+          </p>
+        </div>
+
+        <div class="feature-list">
+          <article>
+            <h3>Data</h3>
+            <p>Jeff Sackmann match files from 2017 through 2026, tagged by tour and source.</p>
+          </article>
+          <article>
+            <h3>Features</h3>
+            <p>Elo, surface stats, serve and return rates, fatigue, H2H, rank trend, and slam history.</p>
+          </article>
+          <article>
+            <h3>Models</h3>
+            <p>Separate ATP and WTA models for hard, clay, and grass with probability calibration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="deploy-band" id="deploy" aria-labelledby="deploy-title">
+        <div>
+          <p class="eyebrow">GitHub Pages</p>
+          <h2 id="deploy-title">Publish in one repo</h2>
+        </div>
+        <ol>
+          <li>Create a GitHub repository and add these files to the repository root.</li>
+          <li>Commit and push to the default branch.</li>
+          <li>Open Settings, then Pages, then publish from the default branch root.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <span>Tennis Match Predictor</span>
+      <span>Front-end demo for research only.</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
