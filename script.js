@@ -1,4 +1,4 @@
-const playerProfiles = {
+let playerProfiles = {
   sinner: { elo: 2148, rank: 2, serve: 0.684, return: 0.412, clay: 0.66, hard: 0.76, grass: 0.68 },
   alcaraz: { elo: 2182, rank: 1, serve: 0.671, return: 0.426, clay: 0.79, hard: 0.72, grass: 0.73 },
   zverev: { elo: 2055, rank: 3, serve: 0.663, return: 0.391, clay: 0.71, hard: 0.68, grass: 0.58 },
@@ -22,7 +22,9 @@ function titleCase(value) {
 
 function profileFor(name, tour) {
   const key = name.trim().toLowerCase().split(/\s+/).pop();
-  if (playerProfiles[key]) return playerProfiles[key];
+  if (playerProfiles[key]) {
+    return playerProfiles[key];
+  }
 
   let seed = 0;
   for (const char of key) seed += char.charCodeAt(0);
@@ -104,5 +106,19 @@ function runPrediction() {
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  runPrediction();
+  playerStatsReady.then(runPrediction);
 });
+
+async function loadPlayerStats() {
+  try {
+    const response = await fetch("data/player_stats.json");
+    if (!response.ok) return;
+
+    const latestProfiles = await response.json();
+    playerProfiles = { ...playerProfiles, ...latestProfiles };
+  } catch {
+    // Keep the built-in demo profiles when the generated data file is unavailable.
+  }
+}
+
+const playerStatsReady = loadPlayerStats();
