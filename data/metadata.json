@@ -1,0 +1,14 @@
+{
+  "end_year": 2026,
+  "player_count": 7137,
+  "rows": 373727,
+  "snapshot": "merged_output_20260602_142209.csv",
+  "sources": {
+    "ATP": 26054,
+    "CHALL": 87532,
+    "WTA": 24290,
+    "WTA_ITF": 235851
+  },
+  "start_year": 2017,
+  "updated_at": "2026-06-02T14:23:43.969355+00:00"
+}
