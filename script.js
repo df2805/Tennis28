@@ -10,6 +10,7 @@ const playerProfiles = {
 };
 
 const form = document.querySelector("#match-form");
+const results = document.querySelector("#results");
 
 function titleCase(value) {
   return value
@@ -59,6 +60,8 @@ function setText(selector, value) {
 }
 
 function runPrediction() {
+  results.hidden = false;
+
   const p1Input = document.querySelector("#player-one").value || "Player 1";
   const p2Input = document.querySelector("#player-two").value || "Player 2";
   const p1Name = titleCase(p1Input);
@@ -103,6 +106,3 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   runPrediction();
 });
-
-form.addEventListener("input", runPrediction);
-runPrediction();
